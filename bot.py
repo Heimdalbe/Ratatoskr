@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+
 class HeimdalClient(discord.Client):
     async def on_ready(self):
         print(f'{self.user} has connected to Discord!')
@@ -26,7 +27,16 @@ class HeimdalClient(discord.Client):
         if message.content == 'ping':
             await message.channel.send('pong')
 
-client = HeimdalClient()
+        if message.content.startswith('!socials'):
+            await message.channel.send(
+                f'Website: https://heimdal.be \n'
+                f'Facebook: https://www.facebook.com/Heimdal.be/ \n'
+                f'Instagram: https://www.instagram.com/heimdalgent/ \n'
+                f'Youtube: https://www.youtube.com/channel/UCW8aHQcjgUXo33nqnZgd3hg'
+            )
+    
+
+bot = HeimdalClient()
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
