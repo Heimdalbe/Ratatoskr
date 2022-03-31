@@ -1,7 +1,9 @@
+import random
 from discord.ext.commands import Bot, Cog
 from discord_slash import cog_ext, SlashContext
 
 guild_ids = [714472652584255488]
+whatIsHeimdal = ["Geen drankvereniging", "Geen pestvereniging", "Geen anti-drankvereniging"]
 
 class InfoCog(Cog):
     def __init__(self, bot: Bot):
@@ -15,6 +17,12 @@ class InfoCog(Cog):
             f'Facebook: https://www.facebook.com/Heimdal.be/ \n'
             f'Instagram: https://www.instagram.com/heimdalgent/ \n'
             f'Youtube: https://www.youtube.com/channel/UCW8aHQcjgUXo33nqnZgd3hg'
+        )
+
+    @cog_ext.cog_slash(name="heimdal", guild_ids=guild_ids, description="Vind nu uit wat Heimdal nu eigenlijk is")
+    async def whatIs(self, ctx: SlashContext):
+        await ctx.send(
+            f'{random.choice(whatIsHeimdal)}'
         )
 
 
