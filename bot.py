@@ -2,13 +2,16 @@
 import os
 
 import discord
+from discord import Intents
+from discord.ext.commands import Bot
 from dotenv import load_dotenv
+from discord_slash import SlashCommand
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 
-class HeimdalClient(discord.Client):
+"""class HeimdalClient(discord.Client):
     async def on_ready(self):
         print(f'{self.user} has connected to Discord!')
 
@@ -19,24 +22,14 @@ class HeimdalClient(discord.Client):
                 f'WILKOMMEN {member.name}, TO ZE GREATEST SERVER IN ZE HISTORY OF SERVERS!'
             )
 
-    async def on_message(self, message):
-        # don't respond to ourselves
-        if message.author == self.user:
-            return
-        
-        if message.content == 'ping':
-            await message.channel.send('pong')
+bot = HeimdalClient()"""
 
-        if message.content.startswith('!socials'):
-            await message.channel.send(
-                f'Website: https://heimdal.be \n'
-                f'Facebook: https://www.facebook.com/Heimdal.be/ \n'
-                f'Instagram: https://www.instagram.com/heimdalgent/ \n'
-                f'Youtube: https://www.youtube.com/channel/UCW8aHQcjgUXo33nqnZgd3hg'
-            )
-    
+bot = Bot(command_prefix="!", self_bot=True, help_command=None, intents=Intents.default())
+slash = SlashCommand(bot, sync_commands=True)
 
-bot = HeimdalClient()
+@bot.event
+async def on_ready():
+    print("Connected to discord")
 
-
+bot.load_extension("social")
 bot.run(TOKEN)
