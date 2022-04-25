@@ -1,6 +1,6 @@
 # bot.py
 import os
-
+import settings
 import discord
 from discord import Intents
 from discord.ext.commands import Bot
@@ -10,26 +10,22 @@ from discord_slash import SlashCommand
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+cogs: list = ["Functions.Info.social"]
 
-"""class HeimdalClient(discord.Client):
-    async def on_ready(self):
-        print(f'{self.user} has connected to Discord!')
-
-    async def on_member_join(self, member):
-            print(f'Member with name {member.name} has joined')
-            await member.create_dm()
-            await member.dm_channel.send(
-                f'WILKOMMEN {member.name}, TO ZE GREATEST SERVER IN ZE HISTORY OF SERVERS!'
-            )
-
-bot = HeimdalClient()"""
-
-bot = Bot(command_prefix="!", self_bot=True, help_command=None, intents=Intents.default())
+bot = Bot(command_prefix=settings.Prefix, self_bot=True, help_command=None, intents=Intents.default())
 slash = SlashCommand(bot, sync_commands=True)
 
 @bot.event
 async def on_ready():
     print("Connected to discord")
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game(settings.BotStatus))
+    for cog in cogs:
+        try:
+            print(f"Loading cog {cog}")
+            bot.load_extension(cog)
+            print(f"Loaded cog {cog}")
+        except Exception as e:
+            exc = "{}: {}".format(type(e).__name__, e)
+            print("Failed to load cog {}\n{}".format(cog, exc))
 
-bot.load_extension("social")
 bot.run(TOKEN)
