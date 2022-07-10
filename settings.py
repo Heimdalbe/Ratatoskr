@@ -1,0 +1,2 @@
+BotStatus = "Example Bot"
+Prefix = "!"
