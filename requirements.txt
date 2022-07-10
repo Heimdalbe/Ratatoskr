@@ -1,1 +1,3 @@
-discord.py[voice]
+py-cord[voice]
+discord~=1.7.3
+python-dotenv~=0.20.0
