@@ -2,30 +2,35 @@
 import os
 import settings
 import discord
-from discord import Intents
-from discord.ext.commands import Bot
 from dotenv import load_dotenv
-from discord_slash import SlashCommand
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-cogs: list = ["Functions.Info.social"]
+cogs_list = [
+    'cogs.info.social',
+    'cogs.info.help'
+]
 
-bot = Bot(command_prefix=settings.Prefix, self_bot=True, help_command=None, intents=Intents.default())
-slash = SlashCommand(bot, sync_commands=True)
+bot = discord.Bot(debug_guilds=[714472652584255488])
+
 
 @bot.event
 async def on_ready():
-    print("Connected to discord")
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game(settings.BotStatus))
-    for cog in cogs:
-        try:
-            print(f"Loading cog {cog}")
-            bot.load_extension(cog)
-            print(f"Loaded cog {cog}")
-        except Exception as e:
-            exc = "{}: {}".format(type(e).__name__, e)
-            print("Failed to load cog {}\n{}".format(cog, exc))
+    print(f"{bot.user} is ready and online!")
+    game = discord.Game('never gonna give you up')
+    await bot.change_presence(status=discord.Status.idle, activity=game)
 
-bot.run(TOKEN)
+
+@bot.event
+async def on_message(message):
+    print(message.content)
+    if 'stamboom' in message.content:
+        await message.channel.send('De StAmBoOm Is GeEn PrIoRiTeIt!')
+
+
+for cog in cogs_list:
+    bot.load_extension(f'{cog}')
+    print(f'loaded {cog}')
+
+bot.run(TOKEN)  # run the bot with the token
