@@ -2,6 +2,8 @@ import random
 from discord.ext.commands import Bot, Cog
 from discord_slash import cog_ext, SlashContext
 
+import bot
+
 guild_ids = [714472652584255488]
 whatIsHeimdal = ["Geen drankvereniging", "Geen pestvereniging", "Geen anti-drankvereniging"]
 
@@ -23,6 +25,12 @@ class InfoCog(Cog):
     async def whatIs(self, ctx: SlashContext):
         await ctx.send(
             f'{random.choice(whatIsHeimdal)}'
+        )
+
+    @cog_ext.cog_slash(name="fwb", guild_ids=guild_ids, description="???")
+    async def whatIs(self, ctx: SlashContext):
+        await ctx.send(
+            f'We are the friends with Blankets'
         )
 
 
