@@ -9,7 +9,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 cogs_list = [
     'cogs.info.social',
-    'cogs.info.help'
+    'cogs.info.help',
+    'cogs.admin.clear',
 ]
 
 intents = discord.Intents.all()
