@@ -1,6 +1,7 @@
 import random
 import discord
 from discord.ext import commands
+from discord import Color
 
 whatIsHeimdal = ["geen drankvereniging", "geen pestvereniging", "geen anti-drankvereniging"]
 guild_ids = [714472652584255488]
@@ -14,12 +15,16 @@ class Social(commands.Cog):
                            guild_ids=[714472652584255488])
     async def socials(self, ctx):
         await ctx.defer()
-        await ctx.followup.send(
-            f'Website: https://heimdal.be \n'
+        embed = discord.Embed(
+            title="Heimdal Social Media",
+            description=f'Website: https://heimdal.be \n'
             f'Facebook: https://www.facebook.com/Heimdal.be/ \n'
             f'Instagram: https://www.instagram.com/heimdalgent/ \n'
-            f'Youtube: https://www.youtube.com/channel/UCW8aHQcjgUXo33nqnZgd3hg'
+            f'Youtube: https://www.youtube.com/channel/UCW8aHQcjgUXo33nqnZgd3hg',
+            color=Color.dark_green()
         )
+        return await ctx.respond(embed=embed)
+
 
     @discord.slash_command(name="heimdal", guild_ids=[714472652584255488],
                            description="Vind uit wat Heimdal nu eigenlijk is")
