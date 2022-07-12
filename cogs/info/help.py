@@ -11,7 +11,8 @@ class Help(commands.Cog):
     @discord.slash_command(name='help', description='An overview of all commands available to you',
                            guild_ids=guild_ids)
     async def help(self, ctx):
-        await ctx.send(
+        await ctx.defer()
+        await ctx.followup.send(
             f'/socials: toon alle social media van Heimdal \n'
             f'/heimdal: ontdek wat Heimdal nu eigenlijk is \n'
             f'/fwb: ???'

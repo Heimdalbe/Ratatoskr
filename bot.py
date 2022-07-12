@@ -12,7 +12,8 @@ cogs_list = [
     'cogs.info.help'
 ]
 
-bot = discord.Bot(debug_guilds=[714472652584255488])
+intents = discord.Intents.all()
+bot = discord.Bot(debug_guilds=[714472652584255488], intents=intents)
 
 
 @bot.event
@@ -25,7 +26,11 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     print(message.content)
-    if 'stamboom' in message.content:
+    # Make sure the bot doesn't react to itself
+    if message.author == bot.user:
+        return
+    if message.author.bot: return
+    if 'stamboom' in message.content.lower():
         await message.channel.send('De StAmBoOm Is GeEn PrIoRiTeIt!')
 
 
